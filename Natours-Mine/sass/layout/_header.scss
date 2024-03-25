@@ -1,0 +1,83 @@
+@use "../abstracts/variables" as variables;
+@use "../abstracts/mixins" as mixins;
+
+/* HEADER */
+.header {
+  height: 85vh;
+  background-image: linear-gradient(
+      to right,
+      rgba(variables.$color-primary-light, 0.8),
+      rgba(variables.$color-primary-dark, 0.8)
+    ),
+    url(../img/hero-small.jpg);
+  background-size: cover;
+  background-position: top;
+  position: relative;
+
+  @supports (clip-path: polygon(0 0)) or (-webkit-clip-path: polygon(0 0)) {
+    height: variables.$header-height;
+
+    -webkit-clip-path: polygon(
+      0 0,
+      100% 0,
+      100% variables.$header-poligon-height,
+      0% 100%
+    );
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% variables.$header-poligon-height,
+      0% 100%
+    );
+  }
+
+  // 600px and 1800px - 37.5em and 112.5em
+  // @media (min-resolution: 192dpi) and (min-width: calc((variables.$phone / 16px) * 1em )),
+  //   (min-width: calc((variables.$big-desktop / 16px) * 1em )) {
+  //   background-image: linear-gradient(
+  //       to right,
+  //       rgba(variables.$color-secondary-light, 0.8),
+  //       rgba(variables.$color-secondary-dark, 0.8)
+  //     ),
+  //     url(../img/hero.jpg);
+  // }
+
+  @include mixins.responsiveBgImage {
+    background-image: linear-gradient(
+        to right,
+        rgba(variables.$color-secondary-light, 0.8),
+        rgba(variables.$color-secondary-dark, 0.8)
+      ),
+      url(../img/hero.jpg);
+  }
+
+  @include mixins.respond(phone) {
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% variables.$header-poligon-height-phone,
+      0% 100%
+    );
+  }
+
+  &__logo-box {
+    position: absolute;
+    inset: 4rem auto auto 4rem;
+  }
+
+  /* &__logo-box:hover .logo {
+    animation: moveInLeft 1s ease-out;
+  } */
+
+  &__logo {
+    height: 3.5rem;
+  }
+
+  &__text-box {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+  }
+}

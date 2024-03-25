@@ -1,0 +1,29 @@
+@use "../abstracts/mixins" as mixins;
+
+.bg-video {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  opacity: 0.15;
+  overflow: hidden;
+
+  &__content {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  img {
+    display: none;
+  }
+  
+  @include mixins.respond(tab-port) {
+    // switching between video and image
+    & video {
+      display: none;
+    }
+    & img {
+      display: initial;
+    }
+  }
+}

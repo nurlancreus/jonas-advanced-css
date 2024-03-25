@@ -1,0 +1,48 @@
+@use "base" as variables;
+
+.footer {
+  background-color: variables.$color-secondary;
+  grid-column: full;
+  padding: 8rem;
+
+  .nav {
+    &__list {
+      --_link-w: 15rem;
+
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        minmax(min(100%, var(--_link-w)), 1fr)
+      );
+      gap: 2rem;
+      align-items: center;
+    }
+
+    &__link {
+      &:where(:link, :visited) {
+        display: block;
+        font-size: 1.4rem;
+        color: #fff;
+        font-family: variables.$font-display;
+        text-transform: uppercase;
+        text-align: center;
+        padding: 1.5rem;
+        transition: all 200ms;
+      }
+
+      &:where(:hover, :active) {
+        background-color: rgba(255 255 255 / 0.05);
+        transform: translateY(-3px);
+      }
+    }
+  }
+
+  .copyright {
+    font-size: 1.4rem;
+    color: variables.$color-grey-light-2;
+    margin-top: 6rem;
+    text-align: center;
+    margin-inline: auto;
+    max-width: 80ch;
+  }
+}

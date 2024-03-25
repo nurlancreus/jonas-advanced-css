@@ -1,0 +1,116 @@
+@use "../abstracts/variables" as variables;
+@use "../abstracts/mixins" as mixins;
+
+/* RESET */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  scrollbar-gutter: stable;
+
+  @include mixins.respond(tab-land) {
+    // width < 1200?
+    font-size: 56.25%; //1 rem = 9px, 9/16 = 56.25%
+  }
+
+  @include mixins.respond(tab-port) {
+    // width < 900?
+    font-size: 50%; //1 rem = 8px, 8/16 = 50%
+  }
+
+  @include mixins.respond(big-desktop) {
+    font-size: 75%; //1rem = 12px, 12/16 = 75%
+  }
+}
+
+::selection {
+  background-color: variables.$color-primary;
+  color: variables.$color-white;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  border-radius: 3px;
+
+  &-thumb {
+    background: variables.$color-primary;
+
+    &:hover {
+      background: variables.$color-primary-dark;
+    }
+  }
+
+  &-track {
+    background: variables.$color-grey-light-2;
+  }
+}
+
+body {
+  box-sizing: border-box;
+  padding: 3rem;
+
+  @include mixins.respond(tab-port) {
+    padding: 0;
+  }
+}
+
+form,
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+/* Remove animations for people who've turned them off*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+picture,
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+}
+
+ul {
+  list-style: none;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Visually hidden, but screen readers can see */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  /* added line */
+  border: 0;
+}

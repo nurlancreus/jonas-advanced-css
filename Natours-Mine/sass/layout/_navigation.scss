@@ -1,0 +1,166 @@
+@use "../abstracts/variables" as variables;
+@use "../abstracts/mixins" as mixins;
+
+.navigation {
+  &__checkbox {
+    display: none;
+
+    &:checked ~ {
+      .navigation {
+        &__button {
+          .hamburger-line {
+            background-color: transparent;
+
+            &::before {
+              translate: 0;
+              rotate: -45deg;
+            }
+
+            &::after {
+              translate: 0;
+              rotate: 45deg;
+            }
+          }
+        }
+
+        &__background {
+          scale: 100;
+        }
+
+        &__nav {
+          opacity: 1;
+          visibility: visible;
+          pointer-events: auto;
+          translate: 0;
+        }
+      }
+    }
+  }
+
+  &__button {
+    background-color: variables.$color-white;
+    height: 7rem;
+    aspect-ratio: 1;
+    position: fixed;
+    inset: 6rem 6rem auto auto;
+    border-radius: 100vmax;
+    box-shadow: variables.$shadow-dark-1;
+    z-index: 1002;
+    cursor: pointer;
+
+    @include mixins.respond(tab-port) {
+      inset: 3rem 3rem auto auto;
+    }
+
+    .hamburger-line {
+      height: 2px;
+      width: 3rem;
+      @include mixins.positionCenter;
+
+      &,
+      &::before,
+      &::after {
+        background-color: variables.$color-grey-dark-3;
+      }
+
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        transition: translate 300ms, rotate 300ms;
+      }
+
+      &::before {
+        translate: 0 -10px;
+      }
+
+      &::after {
+        translate: 0 10px;
+      }
+    }
+
+    &:hover {
+      .hamburger-line {
+        &::before {
+          translate: 0 -12px;
+        }
+
+        &::after {
+          translate: 0 12px;
+        }
+      }
+    }
+  }
+
+  &__background {
+    height: 6rem;
+    aspect-ratio: 1;
+    border-radius: 100vmax;
+    position: fixed;
+    inset: 6.5rem 6.5rem auto auto;
+    z-index: 1000;
+    background-image: radial-gradient(
+      variables.$color-primary-light,
+      variables.$color-primary-dark
+    );
+    transition: scale 800ms cubic-bezier(0.76, 0, 0.24, 1);
+
+    @include mixins.respond(tab-port) {
+      inset: 3.5rem 3.5rem auto auto;
+    }
+  }
+
+  &__nav {
+    // height: 100dvh;
+    // width: 100%;
+    position: fixed;
+    inset: 0;
+    z-index: 1001;
+    transition: all 800ms;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    translate: 400px 0;
+
+    .navigation {
+      &__list {
+        text-align: center;
+        @include mixins.positionCenter;
+      }
+
+      &__item {
+        margin: 1rem;
+      }
+
+      &__link {
+        &:where(:link, :visited) {
+          display: flex;
+          align-items: center;
+          gap: 0.8rem;
+          font-size: 3rem;
+          padding: 1rem 2rem;
+          font-weight: 300;
+          color: variables.$color-white;
+          text-transform: uppercase;
+          transition: all 300ms;
+
+          // background slide effect
+          background-image: linear-gradient(
+            120deg,
+            transparent 0%,
+            transparent 50%,
+            variables.$color-white 50%
+          );
+          background-size: 220%;
+        }
+
+        &:where(:hover, :active) {
+          color: variables.$color-primary;
+          background-position: 100%;
+          translate: 1rem 0;
+        }
+      }
+    }
+  }
+}

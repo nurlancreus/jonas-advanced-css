@@ -1,0 +1,95 @@
+@use "base" as variables;
+
+.homes {
+  --_card-max-w: 25rem;
+
+  grid-column: center;
+  margin-block: 15rem;
+
+  display: grid;
+  gap: 7rem;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(var(--_card-max-w), 100%), 1fr)
+  );
+
+  .home {
+    background-color: variables.$color-grey-light-1;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 5rem;
+
+    &__img {
+      grid-row: 1/2;
+      grid-column: 1/-1;
+
+      filter: brightness(0.9);
+    }
+
+    &__like {
+      border: none;
+      background-color: transparent;
+      grid-column: 2/-1;
+      grid-row: 1/2;
+      align-self: start;
+      justify-self: end;
+      z-index: 10;
+      margin: 1rem;
+
+      svg {
+        fill: variables.$color-primary;
+        stroke: variables.$color-primary;
+        transition: all 300ms;
+        width: 2.5rem;
+        aspect-ratio: 1;
+      }
+
+      &:hover svg {
+        fill: transparent;
+      }
+    }
+
+    &__name {
+      grid-column: 1/-1;
+      grid-row: 1/2;
+      z-index: 10;
+      width: 80%;
+      align-self: end;
+      justify-self: center;
+      transform: translateY(50%);
+
+      font-family: variables.$font-display;
+      font-size: 1.6rem;
+      text-align: center;
+      padding: 1.25rem;
+      background-color: variables.$color-secondary;
+      color: #fff;
+      font-weight: 400;
+    }
+
+    &__content {
+      display: grid;
+      grid-column: 1/-1;
+      grid-template-columns: subgrid;
+      gap: 3.5rem;
+
+      > * {
+        font-size: 1.5rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding-left: 2rem;
+
+        svg {
+          fill: variables.$color-primary;
+          width: 2rem;
+          aspect-ratio: 1;
+        }
+      }
+    }
+
+    &__btn {
+      grid-column: 1/-1;
+    }
+  }
+}

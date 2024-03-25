@@ -1,0 +1,67 @@
+@use "../abstracts/variables" as variables;
+@use "../abstracts/mixins" as mixins;
+
+.composition {
+  position: relative;
+
+  &__photo {
+    width: 55%;
+    box-shadow: variables.$shadow-dark-3;
+    border-radius: 2px;
+    position: absolute;
+    transition: all 200ms;
+    outline-offset: 2rem;
+
+    @include mixins.respond(tab-port) {
+      float: left;
+      position: relative;
+      width: 33.3%;
+      box-shadow: variables.$shadow-dark-2;
+    }
+
+    &[data-composition="1"] {
+      left: 0;
+      top: -2rem;
+
+      @include mixins.respond(tab-port) {
+        top: 0;
+        scale: 1.1;
+      }
+    }
+
+    &[data-composition="2"] {
+      right: 0;
+      top: 2rem;
+
+      @include mixins.respond(tab-port) {
+        top: -1rem;
+        scale: 1.3;
+        z-index: 1;
+      }
+    }
+
+    &[data-composition="3"] {
+      left: 20%;
+      top: 10rem;
+
+      @include mixins.respond(tab-port) {
+        left: 0;
+        top: 0;
+        scale: 1.1;
+      }
+    }
+
+    &:hover {
+      transform: scale(1.05) translateY(-0.5rem);
+      box-shadow: variables.$shadow-dark-3;
+      z-index: 10;
+      outline: 1.5rem solid;
+      outline-color: variables.$color-primary;
+      outline-offset: 10px;
+    }
+
+    :has(&:hover) > &:not(:hover) {
+      transform: scale(0.95);
+    }
+  }
+}

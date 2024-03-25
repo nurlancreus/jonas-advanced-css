@@ -1,0 +1,71 @@
+@use "base" as variables;
+
+.header {
+  grid-column: full-start / col-end 6;
+  background-image: linear-gradient(
+      rgba(variables.$color-secondary, 0.9),
+      rgba(variables.$color-secondary, 0.9)
+    ),
+    url(../img/hero.jpeg);
+  background-size: cover;
+  background-position: center;
+  padding: 4rem 8rem 8rem;
+
+  display: grid;
+  grid-template-rows: 1fr auto minmax(6rem, min-content) 1fr;
+  row-gap: 1.5rem;
+
+  // in order to center content horizontally
+  justify-content: center;
+  grid-auto-columns: minmax(min-content, max-content);
+  // grid-auto-columns: 92.5%;
+
+  @media screen and (max-width: variables.$bp-medium) {
+    grid-column: full;
+  }
+
+  @media screen and (max-width: variables.$bp-small) {
+    padding: 5rem;
+  }
+
+  &__logo {
+    height: 3rem;
+    justify-self: center;
+  }
+
+  &__btn {
+    align-self: start;
+    justify-self: start;
+  }
+
+  &__seenon-text {
+    color: variables.$color-grey-light-2;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    align-items: center;
+    gap: 1.5rem;
+
+    &::before,
+    &::after {
+      content: "";
+      height: 1px;
+      background-color: currentColor;
+    }
+  }
+
+  &__seenon-logos {
+    // display: grid;
+    // grid-template-columns: repeat(4, 1fr);
+    // justify-items: center;
+    gap: 3rem;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+    img {
+      max-height: 2.5rem;
+      filter: brightness(0.7);
+    }
+  }
+}

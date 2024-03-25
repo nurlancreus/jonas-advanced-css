@@ -1,0 +1,90 @@
+@use "base" as variables;
+
+.story {
+  grid-column: full;
+  display: grid;
+  grid-template-columns: subgrid;
+
+  &__pictures {
+    background-image: linear-gradient(
+        rgba(variables.$color-primary, 0.5),
+        rgba(variables.$color-primary, 0.5)
+      ),
+      url(../img/back.jpg);
+    background-size: cover;
+    grid-column: full-start / col-end 4;
+
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+
+    // IMPORTANT!!! Images have aspect-ratios that is why they dont stretch all the way of rows, so they don't centered like we expected them to be. therefore we should use align-items:center in order to center them correctly
+    align-items: center;
+
+    @media screen and (max-width: variables.$bp-medium) {
+      --_gutter: 4rem;
+
+      grid-column: full;
+      order: 2;
+      padding: var(--_gutter);
+      // gap: var(--_gutter);
+    }
+
+    .story {
+      &__img--large {
+        grid-column: 2/6;
+        grid-row: 2/6;
+        box-shadow: 0 2rem 5rem rgba(0 0 0 / 0.1);
+
+        @media screen and (max-width: variables.$bp-medium) {
+          grid-column: 1 / 5;
+          grid-row: 1 / -1;
+        }
+      }
+
+      &__img--small {
+        grid-column: 4/-1;
+        grid-row: 4 / 6;
+
+        transform-origin: right;
+        transform: translateX(15%) scale(1.15, 1.1);
+        box-shadow: 0 2rem 5rem rgba(0 0 0 / 0.2);
+
+        @media screen and (max-width: variables.$bp-medium) {
+          grid-row: 1 / -1;
+          transform: translateX(0) scale(1, 1);
+        }
+      }
+    }
+  }
+
+  &__content {
+    background-color: variables.$color-grey-light-1;
+    grid-column: col-start 5 / full-end;
+    padding: 6rem min(6vw, 12rem);
+    display: grid;
+    align-content: center;
+    justify-items: start;
+
+    @media screen and (max-width: variables.$bp-medium) {
+      grid-column: full;
+      order: 1;
+    }
+
+    .heading-2::before {
+      content: open-quote;
+    }
+
+    .heading-2::after {
+      content: close-quote;
+    }
+
+    .story {
+      &__text {
+        font-size: 1.5rem;
+        font-style: italic;
+        margin-bottom: 4rem;
+      }
+    }
+  }
+}

@@ -1,0 +1,49 @@
+@use "base" as variables;
+
+.realtors {
+  background-color: variables.$color-secondary;
+  grid-column: col-start 7 / full-end;
+  padding: 3rem;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  row-gap: 2rem;
+
+  @media screen and (max-width: variables.$bp-medium) {
+    grid-column: full;
+  }
+
+  &__list {
+    display: grid;
+    row-gap: 5vh;
+
+    @media screen and (max-width: variables.$bp-medium) {
+      grid-auto-flow: column;
+      column-gap: 1.5rem;
+    }
+
+    @media screen and (max-width: variables.$bp-small) {
+      grid-auto-flow: row;
+    }
+  }
+  
+  &__item {
+    display: grid;
+    grid-template-columns: min-content max-content;
+    align-items: center;
+    column-gap: 2rem;
+  }
+
+  &__img {
+    width: 7rem;
+    aspect-ratio: 1;
+    max-width: initial;
+    border-radius: 100vmax;
+  }
+
+  &__sold {
+    text-transform: uppercase;
+    color: variables.$color-grey-light-2;
+    margin-top: -3px;
+  }
+}

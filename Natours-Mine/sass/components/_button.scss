@@ -1,0 +1,121 @@
+@use "../abstracts/variables" as variables;
+
+/* Btn */
+.btn {
+  &,
+  &:where(:link, :visited) {
+    text-transform: uppercase;
+    padding: 1.5rem 4rem;
+    display: inline-block;
+    border-radius: 100vmax;
+    transition: all 200ms;
+    position: relative;
+    isolation: isolate;
+
+    // change for the button element
+    border: none;
+
+    &:focus {
+      outline: 3px solid currentColor;
+      outline-offset: -3px;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-color: inherit;
+    border-radius: inherit;
+    transition: all 400ms;
+  }
+
+  // &:where(:hover, :active)::before {
+  //   transform: scale(1.5, 1.5);
+  //   opacity: 0;
+  // }
+
+  @mixin btnAnimation() {
+    transform: scale(1.5, 1.5);
+    opacity: 0;
+  }
+
+  &:where(:hover, :focus) {
+    transform: translateY(-3px);
+    box-shadow: 0 1rem 2rem rgba(variables.$color-dark, 0.2);
+
+    &::before {
+      @include btnAnimation;
+    }
+  }
+
+  &:active {
+    transform: translate(-1px);
+    box-shadow: 0 0.5rem 1rem rgba(variables.$color-dark, 0.2);
+
+    &::before {
+      @include btnAnimation;
+    }
+  }
+
+  &--white {
+    background-color: variables.$color-white;
+  }
+
+  &--primary {
+    background-color: variables.$color-primary;
+    color: variables.$color-white;
+  }
+
+  &--animated {
+    animation: moveInBottom 500ms ease-out 750ms;
+
+    /* 
+  animation-fill-mode: backwards - applies the styles contained in the 0%  animation keyframe to the element, before the animation even starts playing.
+
+  We used this to make the button hidden before the animation starts, which is exactly what is found in the 0%  keyframe. Without this, we would have to copy the styles to the button itself, which would result in redundant code. */
+    animation-fill-mode: backwards;
+  }
+
+  &--text {
+    &:where(:link, :visited) {
+      color: variables.$color-primary;
+      display: inline-block;
+      position: relative;
+      overflow: hidden;
+      padding: 3px;
+      transition: all 300ms ease-out;
+
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 1px;
+        background-color: currentColor;
+        transition: inherit;
+      }
+
+      &:focus {
+        outline: 3px solid currentColor;
+        outline-offset: -3px;
+      }
+    }
+
+    &:where(:hover, :active) {
+      background-color: variables.$color-primary;
+      color: variables.$color-white;
+      transform: translateY(-2px);
+    }
+
+    &:hover {
+      box-shadow: 0 1rem 2rem rgba(variables.$color-dark, 0.2);
+    }
+
+    &:active {
+      box-shadow: 0 0.5rem 1rem rgba(variables.$color-dark, 0.2);
+    }
+  }
+}

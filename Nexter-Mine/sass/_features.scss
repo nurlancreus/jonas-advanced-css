@@ -1,0 +1,66 @@
+@use "base" as variables;
+
+.features {
+  --_feature-container-max-w: 30rem;
+
+  grid-column: center;
+  margin-block: 15rem;
+
+  display: grid;
+  gap: 6rem;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(var(--_feature-container-max-w), 100%), 1fr)
+  );
+
+  // @supports (grid-template-columns: subgrid) {
+  //   grid-template-columns: subgrid;
+  //   gap: 0;
+  //   row-gap: 6rem;
+  // }
+}
+
+.feature {
+  display: grid;
+  grid-template-columns: min-content 1fr;
+  grid-template-rows: min-content 1fr;
+  align-items: start;
+  row-gap: 1.5rem;
+  column-gap: 2.5rem;
+
+  // @supports (grid-template-columns: subgrid) {
+  //   // 1 and 4
+  //   &:nth-child(3n + 1) {
+  //     grid-column: 1 / span 2;
+  //   }
+
+  //   // 2 and 5
+  //   &:nth-child(3n + 2) {
+  //     grid-column: 4 / span 2;
+  //   }
+
+  //   // 3 and 6
+  //   &:nth-child(3n + 3) {
+  //     grid-column: 7 / span 2;
+  //   }
+  // }
+
+  &__icon {
+    fill: variables.$color-primary;
+    width: 4.5rem;
+    aspect-ratio: 1;
+    grid-column: 1/2;
+    transform: translateY(-1rem);
+  }
+
+  .heading-4 {
+    grid-column: 2/-1;
+    grid-row: 1 /2;
+  }
+
+  &__text {
+    font-size: 1.7rem;
+    grid-column: 2/-1;
+    grid-row: 2/-1;
+  }
+}

@@ -1,0 +1,113 @@
+@use "sass:math";
+@use "../abstracts/variables" as variables;
+
+// Mixins
+// LETTER SPACING
+@mixin letterSpacing($spacing) {
+  /* in order to equally center text horizontally, we should move element right as the size of letter-spacing */
+  letter-spacing: $spacing;
+  margin-right: -$spacing;
+}
+
+// CLEARFIX
+@mixin clearfix {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// GRID WIDTH CALCULATE
+@mixin gridWidthCalc($colSpan, $totalCols) {
+  // calculate sum of width of all gutters
+  $totalGutterWidth: calc(
+    (#{$totalCols} - 1) * #{variables.$gutter-horizontal}
+  );
+
+  // width of a base column
+  $baseColumnWidth: calc((100% - #{$totalGutterWidth}) / #{$totalCols});
+
+  // output calculated width
+  width: calc(
+    (#{$colSpan} * #{$baseColumnWidth}) +
+      ((#{$colSpan} - 1) * #{variables.$gutter-horizontal})
+  );
+}
+
+// CENTER POSITIONED
+@mixin positionCenter() {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  // transform: translate(-50%, -50%);
+  translate: -50% -50%;
+}
+
+// MEDIA QUERIES
+/*
+0 - 600px:      Phone
+600 - 900px:    Tablet portrait
+900 - 1200px:   Tablet landscape
+[1200 - 1800] is where our normal styles apply
+1800px + :      Big desktop
+
+$breakpoint arguement choices:
+- phone
+- tab-port
+- tab-land
+- big-desktop
+
+ORDER: Base + typography > general layout + grid > page layout > components
+
+1em = 16px
+*/
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone {
+    $maxScreenWidth: #{math.div(variables.$phone, 16px)}em;
+    // $maxScreenWidth: #{variables.$phone / 16px}em;
+
+    @media only screen and (width <= $maxScreenWidth) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-port {
+    $maxScreenWidth: #{math.div(variables.$tablet-portrait, 16px)}em;
+    // $maxScreenWidth: #{variables.$tablet-portrait / 16px}em;
+    // $minScreenWidth: #{variables.$phone / 16px}em;
+
+    @media only screen and (width <= $maxScreenWidth) {
+      @content;
+    } //900px
+  }
+  @if $breakpoint == tab-land {
+    $maxScreenWidth: #{math.div(variables.$tablet-landscape, 16px)}em;
+    // $maxScreenWidth: #{variables.$tablet-landscape / 16px}em;
+    // $minScreenWidth: #{variables.$tablet-portrait / 16px}em;
+
+    @media only screen and (width <= $maxScreenWidth) {
+      @content;
+    } //1200px
+  }
+  @if $breakpoint == big-desktop {
+    $minScreenWidth: #{math.div(variables.$big-desktop, 16px)}em;
+    // $minScreenWidth: #{variables.$big-desktop / 16px}em;
+
+    @media only screen and ($minScreenWidth <= width) {
+      @content;
+    } //1800
+  }
+}
+
+@mixin responsiveBgImage() {
+  $phoneScreen: #{math.div(variables.$phone, 16px)}em;
+  $bigDeskScreen: #{math.div(variables.$big-desktop, 16px)}em;
+  // $phoneScreen: #{variables.$phone / 16px}em;
+  // $bigDeskScreen: #{variables.$big-desktop / 16px}em;
+
+  @media only screen and (min-resolution: 192dpi) and (min-width: $phoneScreen),
+    only screen and (-webkit-min-device-pixel-ratio: 2) and (min-width: $phoneScreen),
+    only screen and (min-width: $bigDeskScreen) {
+    @content;
+  }
+}

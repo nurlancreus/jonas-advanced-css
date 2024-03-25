@@ -1,0 +1,20 @@
+@use "../abstracts/variables" as variables;
+
+// FUNCTIONS
+
+// GRID WIDTH CALCULATE
+@function gridWidthCalc($colSpan, $totalCols) {
+  // calculate sum of width of all gutters
+  $totalGutterWidth: calc(
+    (#{$totalCols} - 1) * #{variables.$gutter-horizontal}
+  );
+
+  // width of a base column
+  $baseColumnWidth: calc((100% - #{$totalGutterWidth}) / #{$totalCols});
+
+  // output calculated width
+  @return calc(
+    (#{$colSpan} * #{$baseColumnWidth}) +
+      ((#{$colSpan} - 1) * #{variables.$gutter-horizontal})
+  );
+}

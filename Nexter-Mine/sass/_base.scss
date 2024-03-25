@@ -1,0 +1,118 @@
+// COLOR VARIABLES
+$color-primary: #c69963;
+$color-primary-dark: #b28451;
+
+$color-secondary: #101d2c;
+
+$color-grey-light-1: #f9f7f6;
+$color-grey-light-2: #aaa;
+
+$color-grey-dark-1: #54483a;
+$color-grey-dark-2: #6d5d4b;
+
+// FONT VARIABLES
+$font-primary: "Nunito", sans-serif;
+$font-display: "Josefin Sans", sans-serif;
+
+// BREAKPOINT
+$bp-largest: 75em; // 1200px
+$bp-large: 62.5em; // 1000px
+$bp-medium: 50em; // 800px
+$bp-small: 37.5em; // 600px
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+
+  @media screen and (max-width: $bp-largest) {
+    font-size: 50%;
+  }
+}
+
+body {
+  font-family: $font-primary;
+  color: $color-grey-dark-2;
+  font-size: 1.6rem;
+  font-weight: 300;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  list-style: none;
+}
+
+picture,
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+}
+
+.wrapper {
+  --_max-width: 140rem;
+  --_header-h: 80dvh;
+  --_sidebar-size: 8rem;
+  --_story-h: 40vw;
+
+  --_side-buffer-w: 6rem;
+  --_center-column-w: 16rem;
+
+  width: min(100%, var(--_max-width));
+  margin-inline: auto;
+
+  display: grid;
+  grid-template-rows: var(--_header-h) auto var(--_story-h) repeat(3, auto);
+  grid-template-columns:
+    [sidebar-start] var(--_sidebar-size)
+    [sidebar-end full-start] minmax(var(--_side-buffer-w), 1fr) [center-start]
+    repeat(
+      8,
+      [col-start] minmax(min-content, var(--_center-column-w)) [col-end]
+    )
+    [center-end] minmax(var(--_side-buffer-w), 1fr) [full-end];
+
+  @media screen and (max-width: $bp-large) {
+    --_sidebar-size: 6rem;
+
+    grid-template:
+      var(--_sidebar-size) var(--_header-h) auto var(--_story-h) repeat(3, auto)
+      / [full-start] minmax(var(--_side-buffer-w), 1fr) [center-start]
+      repeat(
+        8,
+        [col-start] minmax(min-content, var(--_center-column-w)) [col-end]
+      )
+      [center-end] minmax(var(--_side-buffer-w), 1fr) [full-end];
+  }
+
+  @media screen and (max-width: $bp-medium) {
+    --_header-h: 100dvh;
+
+    --_header-row-size: calc(var(--_header-h) - var(--_sidebar-size));
+
+    grid-template-rows: var(--_sidebar-size) var(--_header-row-size) repeat(
+        6,
+        auto
+      );
+  }
+
+  @media screen and (max-width: $bp-small) {
+    --_side-buffer-w: 4rem;
+  }
+}

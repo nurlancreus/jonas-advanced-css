@@ -1,0 +1,246 @@
+@use "sass:math";
+@use "../abstracts/variables" as variables;
+@use "../abstracts/mixins" as mixins;
+
+.card {
+  perspective: 150rem;
+  position: relative;
+  height: 52rem;
+  border-radius: 4px;
+  overflow: hidden;
+
+  &__side {
+    position: absolute;
+    inset: 0;
+    transition: all 300ms ease;
+    backface-visibility: hidden;
+    box-shadow: variables.$shadow-dark-2;
+
+    &--front {
+      background-color: variables.$color-white;
+
+      .card__picture {
+        background-size: cover;
+        height: 23rem;
+        background-blend-mode: screen;
+        clip-path: polygon(0 0, 100% 0, 100% 85%, 0% 100%);
+      }
+
+      .card__heading {
+        font-size: 2.8rem;
+        font-weight: 300;
+        text-transform: uppercase;
+        text-align: right;
+        color: variables.$color-white;
+        position: absolute;
+        top: 12rem;
+        right: 2rem;
+        width: 75%;
+
+        &-span {
+          padding: 1rem 1.5rem;
+
+          // Applies same padding styles as if there are two different boxes, not one
+          box-decoration-break: clone;
+          -webkit-box-decoration-break: clone;
+        }
+      }
+
+      .card__details {
+        padding: 3rem;
+
+        ul {
+          width: 80%;
+          margin-inline: auto;
+
+          li {
+            text-align: center;
+            font-size: 1.5rem;
+            padding: 1rem;
+
+            & > :not(:last-child) {
+              border-bottom: 1px solid variables.$color-grey-light-2;
+            }
+          }
+        }
+      }
+    }
+
+    &--back {
+      transform: rotateY(180deg);
+
+      .card__cta {
+        @include mixins.positionCenter;
+        text-align: center;
+
+        .card__price-box {
+          color: variables.$color-white;
+          margin-bottom: 8rem;
+
+          .card__price-only {
+            font-size: 1.4rem;
+            text-transform: uppercase;
+          }
+
+          .card__price-value {
+            font-size: 6rem;
+            font-weight: 100;
+          }
+        }
+
+        .btn {
+          white-space: nowrap;
+        }
+      }
+    }
+  }
+
+  &:hover > &__side--front {
+    transform: rotateY(-180deg);
+  }
+
+  &:hover > &__side--back {
+    transform: rotateY(0);
+  }
+
+  &[data-card="1"] {
+    .card__side {
+      &--front {
+        .card__picture {
+          background-image: linear-gradient(
+              to right bottom,
+              variables.$color-secondary-light,
+              variables.$color-secondary-dark
+            ),
+            url(../../img/nat-5.jpg);
+        }
+
+        .card__heading {
+          &-span {
+            background-image: linear-gradient(
+              to right bottom,
+              rgba(variables.$color-secondary-light, 0.85),
+              rgba(variables.$color-secondary-dark, 0.85)
+            );
+          }
+        }
+      }
+      &--back {
+        background-image: linear-gradient(
+          to right bottom,
+          variables.$color-secondary-light,
+          variables.$color-secondary-dark
+        );
+      }
+    }
+  }
+
+  &[data-card="2"] {
+    .card__side {
+      &--front {
+        .card__picture {
+          background-image: linear-gradient(
+              to right bottom,
+              variables.$color-primary-light,
+              variables.$color-primary-dark
+            ),
+            url(../../img/nat-6.jpg);
+        }
+
+        .card__heading {
+          &-span {
+            background-image: linear-gradient(
+              to right bottom,
+              rgba(variables.$color-primary-light, 0.85),
+              rgba(variables.$color-primary-dark, 0.85)
+            );
+          }
+        }
+      }
+      &--back {
+        background-image: linear-gradient(
+          to right bottom,
+          variables.$color-primary-light,
+          variables.$color-primary-dark
+        );
+      }
+    }
+  }
+
+  &[data-card="3"] {
+    .card__side {
+      &--front {
+        .card__picture {
+          background-image: linear-gradient(
+              to right bottom,
+              variables.$color-tertiary-light,
+              variables.$color-tertiary-dark
+            ),
+            url(../../img/nat-7.jpg);
+        }
+
+        .card__heading {
+          &-span {
+            background-image: linear-gradient(
+              to right bottom,
+              rgba(variables.$color-tertiary-light, 0.85),
+              rgba(variables.$color-tertiary-dark, 0.85)
+            );
+          }
+        }
+      }
+      &--back {
+        background-image: linear-gradient(
+          to right bottom,
+          variables.$color-tertiary-light,
+          variables.$color-tertiary-dark
+        );
+      }
+    }
+  }
+
+  $maxScreenWidth: #{math.div(variables.$tablet-portrait, 16px)}em;
+  @media only screen and (max-width: $maxScreenWidth),
+    only screen and (hover: none) {
+    // @include mixins.respond(tab-port) {
+    height: auto;
+    border-radius: 4px;
+    background-color: variables.$color-white;
+    box-shadow: variables.$shadow-dark-2;
+
+    &__side {
+      position: static;
+      box-shadow: none;
+
+      &--front {
+        .card__details {
+          padding: 1rem 3rem;
+        }
+      }
+
+      &--back {
+        transform: rotateY(0);
+        clip-path: polygon(0 15%, 100% 0, 100% 100%, 0 100%);
+
+        .card__cta {
+          position: static;
+          width: 100%;
+          translate: 0;
+          padding: 7rem 4rem 4rem;
+
+          .card__price-box {
+            margin-bottom: 3rem;
+
+            .card__price-value {
+              font-size: 4rem;
+            }
+          }
+        }
+      }
+    }
+
+    &:hover > &__side--front {
+      transform: rotateY(0);
+    }
+  }
+}
